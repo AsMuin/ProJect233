@@ -86,7 +86,7 @@ function clearRegisterData() {
 
 <template>
   <el-row class="login-page">
-    <video autoplay="autoplay" loop class="fill" muted="muted">
+    <video autoplay loop class="fill" muted="muted">
       <source src="../assets/projectLogin_BG.mp4" type="video/mp4" />
     </video>
     <el-col :span="12" class="bg"></el-col>
@@ -164,7 +164,7 @@ function clearRegisterData() {
 
 .login-page {
   height: 100vh;
-  background-color: #fff;
+
 
   .form {
     display: flex;
@@ -193,5 +193,6 @@ function clearRegisterData() {
   height: 100%;
   object-fit: fill;
   position: absolute;
+  z-index: -1;
 }
 </style>
