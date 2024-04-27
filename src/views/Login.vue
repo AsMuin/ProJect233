@@ -1,14 +1,14 @@
 <script setup>
-import {Lock, User} from "@element-plus/icons-vue"
-import {ref} from "vue";
+import { Lock, User } from "@element-plus/icons-vue";
+import { ref } from "vue";
 // import { ElMessage } from 'element-plus'
 //调用后台接口，完成注册
-import {loginService, registerService} from '../api/user.js'
-import {ElMessage} from "element-plus";
-import {useRouter} from "vue-router";
-import {getUserTokenStore} from "../stores/token.js";
-const userTokenStore = getUserTokenStore()
-const router = new useRouter()
+import { loginService, registerService } from "../api/user.js";
+import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+import { getUserTokenStore } from "../stores/token.js";
+const userTokenStore = getUserTokenStore();
+const router = new useRouter();
 
 //控制注册与登录表单显示，默认显示登录
 const registerFormVisible = ref(false);
@@ -17,7 +17,7 @@ const registerData = ref({
   username: "",
   password: "",
   password2: "",
-})
+});
 //校验密码的函数
 const checkPassword = (rule, value, callback) => {
   if (value === "") {
@@ -27,21 +27,19 @@ const checkPassword = (rule, value, callback) => {
   } else {
     callback();
   }
-}
+};
 //定义表单校验规则
 const registerRules = {
   username: [
-    {required: true, message: "请输入用户名", trigger: "blur"},
-    {min: 3, max: 10, message: "用户名长度在3到10字符之间", trigger: "blur"},
+    { required: true, message: "请输入用户名", trigger: "blur" },
+    { min: 3, max: 10, message: "用户名长度在3到10字符之间", trigger: "blur" },
   ],
   password: [
-    {required: true, message: "请输入密码", trigger: "blur"},
-    {min: 5, max: 16, message: "密码长度在5到16字符之间", trigger: "blur"},
+    { required: true, message: "请输入密码", trigger: "blur" },
+    { min: 5, max: 16, message: "密码长度在5到16字符之间", trigger: "blur" },
   ],
-  password2: [
-    {validator: checkPassword, trigger: "blur"}
-  ],
-}
+  password2: [{ validator: checkPassword, trigger: "blur" }],
+};
 
 async function register() {
   let result = await registerService(registerData.value);
@@ -53,9 +51,9 @@ async function register() {
   //   alert(result.message? result.message : "注册失败")
   // }
   //alert(result.message='注册成功'? '注册成功':result.message)
-  ElMessage.success(result.message =='操作成功'? '注册成功':result.message)
-  registerFormVisible.value=false
-  clearRegisterData()
+  ElMessage.success(result.message == "操作成功" ? "注册成功" : result.message);
+  registerFormVisible.value = false;
+  clearRegisterData();
 }
 
 //绑定数据，复用注册表单数据
@@ -71,11 +69,11 @@ async function login() {
   //   alert(result.message? result.message : "登陆失败")
   // }
   //alert(result.message='登录成功'? '登录成功':result.message)
-  ElMessage.success(result.message=='操作成功'? '登录成功':result.message)
+  ElMessage.success(result.message == "操作成功" ? "登录成功" : result.message);
   //把得到的token存储到pinia的userToken中
-  userTokenStore.setToken(result.data)//result.data里存储token字符串
+  userTokenStore.setToken(result.data); //result.data里存储token字符串
   //跳转到首页 路由完成跳转
-   await router.push('/layout')
+  await router.push("/layout");
 }
 
 //定义函数，清空注册数据模型的数据
@@ -84,20 +82,18 @@ function clearRegisterData() {
   registerData.value.password = "";
   registerData.value.password2 = "";
 }
-
 </script>
 
 <template>
-
   <el-row class="login-page">
-    <video  autoplay="autoplay" loop class="fillWidth" muted='muted' >
-      <source src="../assets/projectLogin_BG.mp4" type="video/mp4"/>
+    <video autoplay="autoplay" loop class="fill" muted="muted">
+      <source src="../assets/projectLogin_BG.mp4" type="video/mp4" />
     </video>
     <el-col :span="12" class="bg"></el-col>
     <el-col :span="6" :offset="3" class="form">
       <!-- 注册表单 -->
       <el-form ref="form" size="large" autocomplete="off" v-if="registerFormVisible" :model="registerData"
-               :rules="registerRules">
+        :rules="registerRules">
         <el-form-item>
           <h1 style="color: white">注册</h1>
         </el-form-item>
@@ -105,12 +101,11 @@ function clearRegisterData() {
           <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input :prefix-icon="Lock" type="password" placeholder="请输入密码"
-                    v-model="registerData.password"></el-input>
+          <el-input :prefix-icon="Lock" type="password" placeholder="请输入密码" v-model="registerData.password"></el-input>
         </el-form-item>
         <el-form-item prop="password2">
           <el-input :prefix-icon="Lock" type="password" placeholder="请输入再次密码"
-                    v-model="registerData.password2"></el-input>
+            v-model="registerData.password2"></el-input>
         </el-form-item>
         <!-- 注册按钮 -->
         <el-form-item>
@@ -119,7 +114,10 @@ function clearRegisterData() {
           </el-button>
         </el-form-item>
         <el-form-item class="flex">
-          <el-link type="info" :underline="false" @click="registerFormVisible = false;clearRegisterData()">
+          <el-link type="info" :underline="false" @click="
+            registerFormVisible = false;
+          clearRegisterData();
+          ">
             ← 返回
           </el-link>
         </el-form-item>
@@ -134,7 +132,7 @@ function clearRegisterData() {
         </el-form-item>
         <el-form-item prop="password">
           <el-input name="password" :prefix-icon="Lock" type="password" placeholder="请输入密码"
-                    v-model="registerData.password"></el-input>
+            v-model="registerData.password"></el-input>
         </el-form-item>
         <el-form-item class="flex">
           <div class="flex">
@@ -147,7 +145,10 @@ function clearRegisterData() {
           <el-button class="button" type="primary" auto-insert-space @click="login">登录</el-button>
         </el-form-item>
         <el-form-item class="flex">
-          <el-link type="info" :underline="false" @click="registerFormVisible = true;clearRegisterData()">
+          <el-link type="info" :underline="false" @click="
+            registerFormVisible = true;
+          clearRegisterData();
+          ">
             注册 →
           </el-link>
         </el-form-item>
@@ -157,12 +158,14 @@ function clearRegisterData() {
 </template>
 
 <style scoped lang="scss">
-.h1{
-  color:white;
+.h1 {
+  color: white;
 }
+
 .login-page {
   height: 100vh;
   background-color: #fff;
+
   .form {
     display: flex;
     flex-direction: column;
@@ -184,10 +187,11 @@ function clearRegisterData() {
     }
   }
 }
-.fillWidth {
+
+.fill {
   width: 100%;
   height: 100%;
-  object-fit:fill;
-  position: absolute
+  object-fit: fill;
+  position: absolute;
 }
 </style>
